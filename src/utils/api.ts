@@ -5,7 +5,6 @@ const APP_URL = "https://swapi.dev/api/starships/?page=1&format=json";
 export const getStarships = async (): Promise<APIResponse> => {
   try {
     const data = await fetch(APP_URL);
-    console.log("data", data);
     if (!data.ok) {
       throw new Error("Something went wrong");
     }
