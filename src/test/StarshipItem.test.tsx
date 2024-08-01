@@ -1,5 +1,3 @@
-// src/__tests__/StarshipItem.test.tsx
-import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { StarshipItem } from "../components/StarshipItem";
 import { fetchFilms } from "../utils/api";

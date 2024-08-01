@@ -9,7 +9,7 @@ export const getStarships = async (): Promise<APIResponse> => {
     if (!data.ok) {
       throw new Error("Something went wrong");
     }
-    const result: APIResponse = await data.json();
+    const result = data.json();
     return result;
   } catch (err) {
     console.log(err);
@@ -20,20 +20,19 @@ export const getStarships = async (): Promise<APIResponse> => {
 export const fetchFilms = async (
   films: string[]
 ): Promise<StarshipFilmsType[]> => {
-  const filmsRes = films.map((film) => fetch(film));
-  return Promise.all(filmsRes)
-    .then((filmsRes) => {
-      const films = filmsRes.map((filmRes) => {
+  try {
+    const filmsRes = await Promise.all(films.map((film) => fetch(film)));
+    const filmsData = await Promise.all(
+      filmsRes.map(async (filmRes) => {
         if (!filmRes.ok) {
           throw new Error("Oops! Something went wrong.");
         }
         return filmRes.json();
-      });
-      return Promise.all(films);
-    })
-    .then((films) => films)
-    .catch((err) => {
-      console.log(err);
-      throw err;
-    });
+      })
+    );
+    return filmsData;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
 };
